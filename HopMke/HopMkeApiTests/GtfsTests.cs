@@ -12,18 +12,16 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadGtfsArchive_SampleFeed_True()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             Assert.True(success);
         }
 
         [Fact]
-        public void LoadGtfsArchive_Null_False()
+        public void LoadGtfsArchive_Null_Exception()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive(null);
 
             Assert.False(success);
@@ -32,8 +30,7 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadAgency_SampleFeed_ExpectedFields()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             Assert.Equal("DTA", gtfs.Agency.Id);
@@ -45,8 +42,7 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadStops_SampleFeed_ExpectedFieldsFirstStop()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             Assert.Equal("FUR_CREEK_RES", gtfs.Stops[0].Id);
@@ -58,8 +54,7 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadRoutes_SampleFeed_ExpectedFieldsFirstRoute()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             Assert.Equal("AB", gtfs.Routes[0].Id);
@@ -76,8 +71,7 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadTrips_SampleFeed_ExpectedFieldsFirstTrip()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             Trip first = gtfs.Trips[0];
@@ -93,8 +87,7 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadStopTimes_SampleFeed_ExpectedFieldsFirstStopTime()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             StopTime first = gtfs.StopTimes[0];
@@ -113,8 +106,7 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadServices_SampleFeed_ExpectedFieldsFirstService()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             Service first = gtfs.Services[0];
@@ -133,8 +125,7 @@ namespace HopMkeApiTests
         [Fact]
         public void LoadServiceExceptions_SampleFeed_ExpectedFieldsFirstServiceException()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             ServiceException first = gtfs.ServiceExceptions[0];
@@ -146,8 +137,7 @@ namespace HopMkeApiTests
         [Fact]
         public void SetReferencesForRoute_SampleFeed_AllRoutesReferToAgency()
         {
-            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
-            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            Gtfs gtfs = new Gtfs();
             bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
 
             Assert.All(gtfs.Routes, (route) => route.Agency.Name.Equals("Demo Transit Authority"));

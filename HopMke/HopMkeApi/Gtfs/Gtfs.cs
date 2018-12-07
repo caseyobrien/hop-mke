@@ -20,36 +20,16 @@ namespace HopMkeApi.Gtfs
         public Service[] Services { get; set; }
         public ServiceException[] ServiceExceptions { get; set; }
 
-        private readonly ILogger _logger;
-
-        public Gtfs(ILogger<Gtfs> logger)
+        public Gtfs()
         {
-            _logger = logger;
+
         }
 
         public bool LoadGtfsArchive(string gtfsArchiveFileName)
         {
             string extractionDirectory = Path.GetFileNameWithoutExtension(gtfsArchiveFileName);
 
-            try
-            { 
-                ZipFile.ExtractToDirectory(gtfsArchiveFileName, extractionDirectory, true);
-            } 
-            catch (InvalidDataException)
-            {
-                _logger.LogError("File {gtfsArchiveFileName} is not a valid zip archive", gtfsArchiveFileName);
-                return false;
-            }
-            catch (DirectoryNotFoundException)
-            {
-                _logger.LogError("File {gtfsArchiveFileName} not found.", gtfsArchiveFileName);
-                return false;
-            }
-            catch (Exception)
-            {
-                _logger.LogError("Error with file {gtfsArchiveFileName}", gtfsArchiveFileName);
-                return false;
-            }
+            ZipFile.ExtractToDirectory(gtfsArchiveFileName, extractionDirectory, true);
 
             string[] gtfsFiles = Directory.GetFiles(extractionDirectory);
             Agency = (Agency) LoadObjectsFromFile("Agency", extractionDirectory + "/agency.txt")[0];

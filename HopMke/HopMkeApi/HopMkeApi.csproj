@@ -13,4 +13,12 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="sample-feed.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\ValuesController.cs" />
+  </ItemGroup>
 </Project>
