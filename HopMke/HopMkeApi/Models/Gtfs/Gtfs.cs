@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -50,15 +51,60 @@ namespace HopMkeApi.Models.Gtfs
             }
 
             string[] gtfsFiles = Directory.GetFiles(extractionDirectory);
-            Agency = (Agency)LoadObjectsFromFile("Agency", extractionDirectory + "/agency.txt")[0];
-            Stops = (Stop[])LoadObjectsFromFile("Stop", extractionDirectory + "/stops.txt");
-            Routes = (Route[])LoadObjectsFromFile("Route", extractionDirectory + "/routes.txt");
-            Trips = (Trip[])LoadObjectsFromFile("Trip", extractionDirectory + "/trips.txt");
-            StopTimes = (StopTime[])LoadObjectsFromFile("StopTime", extractionDirectory + "/stop_times.txt");
-            Services = (Service[])LoadObjectsFromFile("Service", extractionDirectory + "/calendar.txt");
-            ServiceExceptions = (ServiceException[])LoadObjectsFromFile("ServiceException", extractionDirectory + "/calendar_dates.txt");
+            Agency = (Agency) LoadObjectsFromFile("Agency", extractionDirectory + "/agency.txt")[0];
+            Stops = (Stop[]) LoadObjectsFromFile("Stop", extractionDirectory + "/stops.txt");
+            Routes = (Route[]) LoadObjectsFromFile("Route", extractionDirectory + "/routes.txt");
+            Trips = (Trip[]) LoadObjectsFromFile("Trip", extractionDirectory + "/trips.txt");
+            StopTimes = (StopTime[]) LoadObjectsFromFile("StopTime", extractionDirectory + "/stop_times.txt");
+            Services = (Service[]) LoadObjectsFromFile("Service", extractionDirectory + "/calendar.txt");
+            ServiceExceptions = (ServiceException[]) LoadObjectsFromFile("ServiceException", extractionDirectory + "/calendar_dates.txt");
+
+            SetReferences();
 
             return true;
+        }
+
+        private void SetReferences()
+        {
+            SetReferencesForRoutes();
+            SetReferencesForTrips();
+            SetReferencesForStopTimes();
+            SetReferncesForServiceExceptions();
+        }
+
+        private void SetReferencesForRoutes()
+        {
+            foreach (Route route in Routes)
+            {
+                route.Agency = Agency;
+            }
+        }
+
+        private void SetReferencesForTrips()
+        {
+            foreach (Trip trip in Trips)
+            {
+                trip.Route = Routes.FirstOrDefault(r => r.Id == trip.RouteId);
+                trip.Service = Services.FirstOrDefault(s => s.Id == trip.ServiceId);
+                // trip.Shape = Services.FirstOrDefault(s => s.Id == trip.ShapeId);
+            }
+        }
+
+        private void SetReferencesForStopTimes()
+        {
+            foreach (StopTime stopTime in StopTimes)
+            {
+                stopTime.Trip = Trips.FirstOrDefault(t => t.Id == stopTime.TripId);
+                stopTime.Stop = Stops.FirstOrDefault(s => s.Id == stopTime.StopId);
+            }
+        }
+
+        private void SetReferncesForServiceExceptions()
+        {
+            foreach (ServiceException serviceException in ServiceExceptions)
+            {
+                serviceException.Service = Services.FirstOrDefault(s => s.Id == serviceException.ServiceId);
+            }
         }
 
         private GtfsObject[] LoadObjectsFromFile(string type, string gtfsFile)

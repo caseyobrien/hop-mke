@@ -142,5 +142,15 @@ namespace HopMkeApiTests
             Assert.Equal(DateTime.ParseExact("20070604", "yyyyMMdd", CultureInfo.InvariantCulture), first.Date);
             Assert.Equal(2, first.Type);
         }
+
+        [Fact]
+        public void SetReferencesForRoute_SampleFeed_AllRoutesReferToAgency()
+        {
+            var mockGtfsLogger = new Mock<ILogger<Gtfs>>();
+            Gtfs gtfs = new Gtfs(mockGtfsLogger.Object);
+            bool success = gtfs.LoadGtfsArchive("sample-feed.zip");
+
+            Assert.All(gtfs.Routes, (route) => route.Agency.Name.Equals("Demo Transit Authority"));
+        }
     }
 }
