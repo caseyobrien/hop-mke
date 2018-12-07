@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace HopMkeApi.Models.Gtfs
+namespace HopMkeApi.Gtfs
 {
     public class Gtfs
     {

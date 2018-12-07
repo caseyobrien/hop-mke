@@ -1,6 +1,6 @@
 using System;
 using System.Globalization;
-using HopMkeApi.Models.Gtfs;
+using HopMkeApi.Gtfs;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;

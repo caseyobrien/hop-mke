@@ -3,7 +3,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace HopMkeApi.Models.Gtfs
+namespace HopMkeApi.Gtfs
 {
     /// <summary>
     /// Handles converting JSON string values into a C# boolean data type.
