@@ -11,6 +11,7 @@ namespace HopMkeApi.Models.Gtfs
 {
     public class Gtfs
     {
+        // TO-DO: Make a singleton class.
         public Agency Agency { get; set; }
         public Stop[] Stops { get; set; }
         public Route[] Routes { get; set; }
