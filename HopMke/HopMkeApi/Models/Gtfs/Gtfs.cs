@@ -50,67 +50,38 @@ namespace HopMkeApi.Models.Gtfs
             }
 
             string[] gtfsFiles = Directory.GetFiles(extractionDirectory);
-
-            Agency = LoadAgency(extractionDirectory + "/agency.txt");
-            Stops = LoadStops(extractionDirectory + "/stops.txt");
-            Routes = LoadRoutes(extractionDirectory + "/routes.txt");
-            Trips = LoadTrips(extractionDirectory + "/trips.txt");
-            StopTimes = LoadStopTimes(extractionDirectory + "/stop_times.txt");
-            Services = LoadServices(extractionDirectory + "/calendar.txt");
-            ServiceExceptions = LoadServiceExceptions(extractionDirectory + "/calendar_dates.txt");
+            Agency = (Agency)LoadObjectsFromFile("Agency", extractionDirectory + "/agency.txt")[0];
+            Stops = (Stop[])LoadObjectsFromFile("Stop", extractionDirectory + "/stops.txt");
+            Routes = (Route[])LoadObjectsFromFile("Route", extractionDirectory + "/routes.txt");
+            Trips = (Trip[])LoadObjectsFromFile("Trip", extractionDirectory + "/trips.txt");
+            StopTimes = (StopTime[])LoadObjectsFromFile("StopTime", extractionDirectory + "/stop_times.txt");
+            Services = (Service[])LoadObjectsFromFile("Service", extractionDirectory + "/calendar.txt");
+            ServiceExceptions = (ServiceException[])LoadObjectsFromFile("ServiceException", extractionDirectory + "/calendar_dates.txt");
 
             return true;
         }
 
-        private Agency LoadAgency(string agencyGtfsFile)
+        private GtfsObject[] LoadObjectsFromFile(string type, string gtfsFile)
         {
-            JArray agenciesJson = CsvToJson(agencyGtfsFile);
-            JToken agencyJson = agenciesJson[0];
-            Agency agency = agencyJson.ToObject<Agency>();
-
-            return agency;
-        }
-
-        private Stop[] LoadStops(string stopsGtfsFile)
-        {
-            JArray stopsJson = CsvToJson(stopsGtfsFile);
-            Stop[] stops = stopsJson.ToObject<Stop[]>();
-            return stops;
-        }
-
-        private Route[] LoadRoutes(string routesGtfsFile)
-        {
-            JArray routesJson = CsvToJson(routesGtfsFile);
-            Route[] routes = routesJson.ToObject<Route[]>();
-            return routes;
-        }
-
-        private Trip[] LoadTrips(string tripsGtfsFile)
-        {
-            JArray tripsJson = CsvToJson(tripsGtfsFile);
-            Trip[] trips = tripsJson.ToObject<Trip[]>();
-            return trips;
-        }
-
-        private StopTime[] LoadStopTimes(string stopTimesGtfsFile)
-        {
-            JArray stopTimesJson = CsvToJson(stopTimesGtfsFile);
-            StopTime[] stopTimes = stopTimesJson.ToObject<StopTime[]>();
-            return stopTimes;
-        }
-
-        private Service[] LoadServices(string calendarGtfsFile)
-        {
-            JArray servicesJson = CsvToJson(calendarGtfsFile);
-            Service[] services = JsonConvert.DeserializeObject<Service[]>(servicesJson.ToString(), new BooleanJsonConverter(), new DateJsonConverter());//servicesJson.ToObject<Service[]>();
-            return services;
-        }
-
-        private ServiceException[] LoadServiceExceptions(string calendarDatesGtfsFile)
-        {
-            JArray serviceExceptionsJson = CsvToJson(calendarDatesGtfsFile);
-            ServiceException[] serviceExceptions = JsonConvert.DeserializeObject<ServiceException[]>(serviceExceptionsJson.ToString(), new DateJsonConverter());
-            return serviceExceptions;
+            JArray jsonArray = CsvToJson(gtfsFile);
+            switch (type)
+            {
+                case "Agency":
+                    return jsonArray.ToObject<Agency[]>();
+                case "Stop":
+                    return jsonArray.ToObject<Stop[]>();
+                case "Route":
+                    return jsonArray.ToObject<Route[]>();
+                case "Trip":
+                    return jsonArray.ToObject<Trip[]>();
+                case "StopTime":
+                    return jsonArray.ToObject<StopTime[]>();
+                case "Service":
+                    return jsonArray.ToObject<Service[]>();
+                case "ServiceException":
+                    return jsonArray.ToObject<ServiceException[]>();
+            }
+            return null;
         }
 
         private JArray CsvToJson(string csvFile)
@@ -135,9 +106,10 @@ namespace HopMkeApi.Models.Gtfs
         }
     }
 
-    
+    public abstract class GtfsObject { }
 
-    public class Agency
+
+    public class Agency : GtfsObject
     {
         [Key]
         [JsonProperty("agency_id")]
@@ -150,7 +122,7 @@ namespace HopMkeApi.Models.Gtfs
         public string TimeZone { get; set; }
     }
 
-    public class Stop
+    public class Stop : GtfsObject
     {
         [Key]
         [JsonProperty("stop_id")]
@@ -167,7 +139,7 @@ namespace HopMkeApi.Models.Gtfs
         public string Url { get; set; }
     }
 
-    public class Route
+    public class Route : GtfsObject
     {
         [Key]
         [JsonProperty("route_id")]
@@ -192,7 +164,7 @@ namespace HopMkeApi.Models.Gtfs
 
     }
 
-    public class StopTime
+    public class StopTime : GtfsObject
     {
         [Key]
         public int Id { get; set; }
@@ -219,7 +191,7 @@ namespace HopMkeApi.Models.Gtfs
 
     }
 
-    public class Trip
+    public class Trip : GtfsObject
     {
         [Key]
         [JsonProperty("trip_id")]
@@ -246,7 +218,7 @@ namespace HopMkeApi.Models.Gtfs
     }
 
 
-    public class Service
+    public class Service : GtfsObject
     {
         [Key]
         [JsonProperty("service_id")]
@@ -280,7 +252,7 @@ namespace HopMkeApi.Models.Gtfs
         public DateTime EndDate { get; set; }
     }
 
-    public class ServiceException
+    public class ServiceException : GtfsObject
     {
         [Key]
         public string Id { get; set; }
@@ -294,7 +266,7 @@ namespace HopMkeApi.Models.Gtfs
         public int Type { get; set; }
     }
 
-    public class Shape
+    public class Shape : GtfsObject
     {
         [Key]
         public string Id { get; set; }
