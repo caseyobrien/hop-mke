@@ -1,0 +1,3 @@
+route_type,route_id,route_short_name,route_long_name,agency_id
+0,1,MSBWD,M-Line Southbound,HOPMKE
+0,0,MNBWD,M-Line Northbound,HOPMKE

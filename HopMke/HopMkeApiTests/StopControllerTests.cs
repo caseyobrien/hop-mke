@@ -30,7 +30,7 @@ namespace HopMkeApiTests
         {
             StopController controller = new StopController();
 
-            var result = controller.GetNearest(lat, lng);
+            var result = controller.GetNearest(lat, lng, "");
 
             var viewResult = Assert.IsType<OkObjectResult>(result);
             Stop stop = Assert.IsAssignableFrom<Stop>(viewResult.Value);

@@ -17,7 +17,9 @@ namespace HopMkeApi
 
         public RouteController()
         {
-            _gtfs.LoadGtfsArchive("sample-feed.zip");
+            //_gtfs.LoadGtfsArchive("sample-feed.zip");
+            _gtfs.LoadGtfsArchive("hop-mke.zip");
+
         }
 
 

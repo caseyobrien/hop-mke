@@ -1,0 +1,19 @@
+stop_lon,stop_name,stop_lat,stop_id,location_type
+-87.90491,Jackson at Juneau Southbound,43.04558,11,0
+-87.90511,Cathedral Square Eastbound,43.04256,10,0
+-87.90482,Ogden/Jackson Westbound,43.04802,13,0
+-87.90467,Jackson at Juneau Northbound,43.04584,12,0
+-87.90008,Ogden at Astor Westbound,43.04821,15,0
+-87.90376,Ogden/Jackson Eastbound,43.04824,14,0
+-87.89581,Burns Commons,43.04761,17,0
+-87.90009,Ogden at Astor Eastbound,43.04805,16,0
+-87.91169,Saint Paul at Plankinton Westbound,43.03478,1,0
+-87.91609,Intermodal Station,43.03515,0,0
+-87.9081,Historic Third Ward Westbound,43.03508,3,0
+-87.91102,Saint Paul at Plankinton Eastbound,43.03454,2,0
+-87.90788,Wisconsin Avenue Southbound,43.03815,5,0
+-87.90675,Historic Third Ward Eastbound,43.03502,4,0
+-87.90828,City Hall Southbound,43.04127,7,0
+-87.90659,Wisconsin Avenue Northbound,43.03817,6,0
+-87.90511,Cathedral Square Westbound,43.0426,9,0
+-87.90697,City Hall Northbound,43.0413,8,0

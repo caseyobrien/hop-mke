@@ -19,7 +19,8 @@ namespace HopMkeApi
 
         public StopController()
         {
-            _gtfs.LoadGtfsArchive("sample-feed.zip");
+            //_gtfs.LoadGtfsArchive("sample-feed.zip");
+            _gtfs.LoadGtfsArchive("hop-mke.zip");
         }
 
 
@@ -41,11 +42,11 @@ namespace HopMkeApi
         [HttpGet("nearest")]
         [ProducesResponseType(200, Type = typeof(Stop))]
         [ProducesResponseType(404)]
-        public IActionResult GetNearest(string lat, string lng)
+        public IActionResult GetNearest(string lat, string lng, string dir)
         {
             double latitude = double.Parse(lat);
             double longitude = double.Parse(lng);
-            Stop stop = GoogleQueries.GetNearestStop(latitude, longitude);
+            Stop stop = GoogleQueries.GetNearestStop(latitude, longitude, dir);
             return stop != null ? Ok(stop) : (IActionResult)NotFound();
         }
 

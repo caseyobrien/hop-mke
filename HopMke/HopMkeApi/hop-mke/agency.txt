@@ -1,0 +1,2 @@
+agency_url,agency_name,agency_id,agency_timezone
+http://www.thehopmke.com,Hop MKE,HOPMKE,America/Chicago

@@ -38,19 +38,22 @@ namespace HopMkeApi.Gtfs
             Trips = (Trip[]) LoadObjectsFromFile("Trip", extractionDirectory + "/trips.txt");
             StopTimes = (StopTime[]) LoadObjectsFromFile("StopTime", extractionDirectory + "/stop_times.txt");
             Services = (Service[]) LoadObjectsFromFile("Service", extractionDirectory + "/calendar.txt");
-            ServiceExceptions = (ServiceException[]) LoadObjectsFromFile("ServiceException", extractionDirectory + "/calendar_dates.txt");
 
-            SetReferences();
+            if (File.Exists(extractionDirectory + "/calendar_dates.txt")) 
+                ServiceExceptions = (ServiceException[]) LoadObjectsFromFile("ServiceException", extractionDirectory + "/calendar_dates.txt");
+
+            SetReferences(extractionDirectory);
 
             return true;
         }
 
-        private void SetReferences()
+        private void SetReferences(string extractionDirectory)
         {
             SetReferencesForRoutes();
             SetReferencesForTrips();
             SetReferencesForStopTimes();
-            SetReferncesForServiceExceptions();
+            if (File.Exists(extractionDirectory + "/calendar_dates.txt"))
+                SetReferncesForServiceExceptions();
         }
 
         private void SetReferencesForRoutes()
