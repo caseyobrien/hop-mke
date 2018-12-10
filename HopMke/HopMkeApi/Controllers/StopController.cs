@@ -39,12 +39,14 @@ namespace HopMkeApi
         }
 
         [HttpGet("nearest")]
-        public ActionResult<Stop> GetNearest(string lat, string lng)
+        [ProducesResponseType(200, Type = typeof(Stop))]
+        [ProducesResponseType(404)]
+        public IActionResult GetNearest(string lat, string lng)
         {
             double latitude = double.Parse(lat);
             double longitude = double.Parse(lng);
             Stop stop = GoogleQueries.GetNearestStop(latitude, longitude);
-            return stop;
+            return stop != null ? Ok(stop) : (IActionResult)NotFound();
         }
 
     }

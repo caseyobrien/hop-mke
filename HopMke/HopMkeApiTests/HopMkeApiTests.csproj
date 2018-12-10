@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-
+    <UserSecretsId>443a1efc-70ae-4516-a69a-774d74ded0b1</UserSecretsId>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -13,6 +13,7 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +23,8 @@
     <Reference Include="Microsoft.Extensions.Logging.Abstractions">
       <HintPath>..\..\..\..\..\..\usr\local\share\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.logging.abstractions\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
+    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60" />
   </ItemGroup>
   <ItemGroup>
     <None Update="sample-feed.zip">
