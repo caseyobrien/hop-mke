@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Maps;
+using HopMkeApi.Google;
 using HopMkeApi.Gtfs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,5 +37,15 @@ namespace HopMkeApi
         {
             return _gtfs.Stops.FirstOrDefault(s => s.Id == id);
         }
+
+        [HttpGet("nearest")]
+        public ActionResult<Stop> GetNearest(string lat, string lng)
+        {
+            double latitude = double.Parse(lat);
+            double longitude = double.Parse(lng);
+            Stop stop = GoogleQueries.GetNearestStop(latitude, longitude);
+            return stop;
+        }
+
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Maps;
+using HopMkeApi.Google;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,6 +20,11 @@ namespace HopMkeApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            // Configure Google APIs
+            GoogleSettings googleSettings = Configuration.GetSection("Google")
+                .Get<GoogleSettings>();
+            GoogleSigned.AssignAllServices(new GoogleSigned(googleSettings.ApiKey));
         }
 
         public IConfiguration Configuration { get; }

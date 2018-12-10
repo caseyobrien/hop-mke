@@ -2,15 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>443a1efc-70ae-4516-a69a-774d74ded0b1</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
     <Folder Include="Gtfs\" />
+    <Folder Include="Google\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="gmaps-api-net" Version="0.25.0" />
   </ItemGroup>
 
   <ItemGroup>
