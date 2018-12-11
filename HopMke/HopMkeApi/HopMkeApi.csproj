@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\ValuesController.cs" />
+    <Compile Remove="Controllers\StopTimeController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

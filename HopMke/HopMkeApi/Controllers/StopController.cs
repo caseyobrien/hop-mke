@@ -50,5 +50,15 @@ namespace HopMkeApi
             return stop != null ? Ok(stop) : (IActionResult)NotFound();
         }
 
+        [HttpGet("next/{id}")]
+        [ProducesResponseType(200, Type = typeof(Stop))]
+        [ProducesResponseType(404)]
+        public IActionResult GetNext(string id)
+        {
+            StopTime stopTime = _gtfs.StopTimes.Where(st => st.ArrivalTime >= DateTime.Now.TimeOfDay).OrderBy(st => st.ArrivalTime).FirstOrDefault(st => st.StopId == id);
+            return stopTime != null ? Ok(stopTime) : (IActionResult)NotFound();
+        }
+
+
     }
 }
