@@ -9,9 +9,20 @@ namespace HopMkeApp
 {
     public partial class MainPage : ContentPage
     {
+        private HopMkeService _service;
+
         public MainPage()
         {
             InitializeComponent();
+
+            _service = new HopMkeService();
+        }
+
+        async void OnNextButtonClicked(object sender, EventArgs e)
+        {
+            Console.WriteLine("Cicked.");
+            string data = await _service.RefreshDataAsync();
+            _label.Text = data;
         }
     }
 }
