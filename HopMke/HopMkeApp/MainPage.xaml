@@ -6,8 +6,16 @@
             x:Name="_label"
             Text="Welcome to Xamarin.Forms!" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
         <Button
-            x:Name="_button"
+            x:Name="_nearestNBStop"
+            Text="Nearest NB Stop"
+            Clicked="OnButtonClicked" />
+        <Button
+            x:Name="_nearestSBStop"
+            Text="Nearest SB Stop"
+            Clicked="OnButtonClicked" />
+        <Button
+            x:Name="_next"
             Text="Next"
-            Clicked="OnNextButtonClicked" />
+            Clicked="OnButtonClicked" />
     </StackLayout>
 </ContentPage>

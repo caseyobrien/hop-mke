@@ -202,7 +202,7 @@ namespace HopMkeApi.Gtfs
         public string TripId { get; set; }
         public Trip Trip { get; set; }
         [JsonProperty("arrival_time")]
-        public TimeSpan ArrivalTime{ get; set; }
+        public TimeSpan ArrivalTime { get; set; }
         [JsonProperty("departure_time")]
         public TimeSpan DepartureTime { get; set; }
         [JsonProperty("stop_id")]

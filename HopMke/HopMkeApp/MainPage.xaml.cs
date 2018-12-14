@@ -11,17 +11,40 @@ namespace HopMkeApp
     {
         private HopMkeService _service;
 
+        private double _lat;
+        private double _lng;
+
         public MainPage()
         {
             InitializeComponent();
 
+            /*ILocationTracker locationTracker = DependencyService.Get<ILocationTracker>();
+            locationTracker.LocationChanged += OnLocationTrackerLocationChanged;
+            locationTracker.StartTracking();*/
+
             _service = new HopMkeService();
         }
 
-        async void OnNextButtonClicked(object sender, EventArgs e)
+        /*void OnLocationTrackerLocationChanged(object sender, GeographicLocation args)
         {
-            Console.WriteLine("Cicked.");
-            string data = await _service.RefreshDataAsync();
+            _lat = args.Latitude;
+            _lng = args.Longitude;
+        }*/
+
+        async void OnButtonClicked(object sender, EventArgs e)
+        {
+            string data = "";
+            if (sender == _nearestNBStop)
+            {
+                data = await _service.NearestNBStop();
+            } else if (sender == _nearestSBStop)
+            {
+                data = await _service.NearestSBStop();
+            } else if (sender == _next)
+            {
+                data = await _service.Next("2");
+            }
+
             _label.Text = data;
         }
     }

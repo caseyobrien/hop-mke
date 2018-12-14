@@ -55,10 +55,12 @@ namespace HopMkeApi
         [ProducesResponseType(404)]
         public IActionResult GetNext(string id)
         {
-            StopTime stopTime = _gtfs.StopTimes.Where(st => st.ArrivalTime >= DateTime.Now.TimeOfDay).OrderBy(st => st.ArrivalTime).FirstOrDefault(st => st.StopId == id);
+            string agencyTimeZoneString = _gtfs.Agency.TimeZone;
+            TimeZoneInfo agencyTimeZone = TimeZoneInfo.FindSystemTimeZoneById(agencyTimeZoneString);
+            DateTime agencyTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, agencyTimeZone);
+            
+            StopTime stopTime = _gtfs.StopTimes.Where(st => st.ArrivalTime >= agencyTime.TimeOfDay).OrderBy(st => st.ArrivalTime).FirstOrDefault(st => st.StopId == id);
             return stopTime != null ? Ok(stopTime) : (IActionResult)NotFound();
         }
-
-
     }
 }
