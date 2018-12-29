@@ -53,13 +53,9 @@ namespace HopMkeApi
         [HttpGet("next/{id}")]
         [ProducesResponseType(200, Type = typeof(Stop))]
         [ProducesResponseType(404)]
-        public IActionResult GetNext(string id)
+        public IActionResult GetNext(string id, string dir)
         {
-            string agencyTimeZoneString = _gtfs.Agency.TimeZone;
-            TimeZoneInfo agencyTimeZone = TimeZoneInfo.FindSystemTimeZoneById(agencyTimeZoneString);
-            DateTime agencyTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, agencyTimeZone);
-            
-            StopTime stopTime = _gtfs.StopTimes.Where(st => st.ArrivalTime >= agencyTime.TimeOfDay).OrderBy(st => st.ArrivalTime).FirstOrDefault(st => st.StopId == id);
+            StopTime stopTime = GoogleQueries.GetNextStopTime(id, dir);
             return stopTime != null ? Ok(stopTime) : (IActionResult)NotFound();
         }
     }
